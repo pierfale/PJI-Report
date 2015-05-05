@@ -5,7 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 \usepackage{graphicx}
-\usepackage[export]{adjustbox}
+\usepackage{adjustbox}
 
 \begin{document}
 
@@ -142,25 +142,29 @@ Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans
 
 \section{Génération de graphes}
 
-    Nous avons mis en place une génération de graphe à partir des fichiers de log crée par chacun des acteurs. En effet, pour pouvoir apprécier les simulations et leurs résultats, une visualisation graphique est nécessaires.
+\paragraph
+Nous avons mis en place une génération de graphe à partir des fichiers de log crée par chacun des acteurs. En effet, pour pouvoir apprécier les simulations et leurs résultats, une visualisation graphique est nécessaires.
 
-    Graphes d’activité des neurones : 
-
+\subsection*{Graphes d’activité des neurones}
+\paragraph
 A partir des logs que les neurones créent, nous pouvons générer un graphe d’activité neuronales. 
 
+\includegraphics[scale=0.95,right]{image/neuronActivity.png}
 
-
+\paragraph
 Certaines options sont disponibles pour générer ce type de graphes :
-Donner la liste des index des neurones que l’on souhaite observer.
-Donner la liste des index des couches que l’on souhaite observer.
-Donner un temps maximum.
+\begin{itemize}
+\item{Donner la liste des index des neurones que l’on souhaite observer.}
+\item{Donner la liste des index des couches que l’on souhaite observer.}
+\item{Donner un temps maximum.}
+\end{itemize}
 
+\subsection*{Graphes des activités des synapses}
 
-    Graphes des activités des synapses : 
+rubarberubarberubarberubarberubarberubarberubarberubarberubarbe
 
-
-Remarques : ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
-
-
+\subsection{Remarques}
+\paragraph
+ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
 
 \end{document}
