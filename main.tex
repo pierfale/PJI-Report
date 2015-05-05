@@ -1,6 +1,6 @@
 % Package
 
-\documentclass{article}
+\documentclass[a4paper,10pt]{article}
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
@@ -64,39 +64,45 @@ Mais le projet a eu d’autres besoins plus urgent, et nous avons donc développ
 \begin{figure}[h!]
 \includegraphics[scale=0.15,right]{image/scala.png}
 \end{figure}
-\paragraph
+\paragraph{}
 Scala est un langage de programmation multi-paradigme crée par l’Ecole polytechnique fédéral de Lausanne (EPFL). Il combine la programmation orientés objet et le fonctionnel. Le langage Scala permet également de passer à l’échelle, et le fait qu’il utilise la machine virtuelle java (JVM) permet une portabilité sur différentes plateformes et ainsi l’utilisation de cluster pour fonctionner.
 
 \subsubsection{Akka} 
 \begin{figure}[h!]
 \includegraphics[scale=0.1,right]{image/akka.png}
 \end{figure}
-\paragraph
+\paragraph{}
 Akka est une bibliothèque disponible en Java et Scala qui permet d’ajouter de la concurrence et de la distribution à Scala, via un système d'acteur et de message.
         
 \subsubsection{JspikeStack} 
 
-\paragraph
+\paragraph{}
 JspikeStack est une application écrit en Java basé sur le modèle d'une machine de Boltzmann restreinte, qui construit et simule un réseau neuronal. Il permet notamment d’utiliser le réseau pré-appris Mnist, qui reconnaît les chiffres à partir du caméras.
 
 \subsubsection{Memristor} 
 
-\paragraph
+\paragraph{}
 Les memristors sont des composants électroniques dis passifs, il vient de la contraction de “memory” et “resistance”. Ce composant utilise sa résistance qui peut varier grâce à un courant électronique pour stocker de l’information. Le memristor a été “prédit” en 1971 par Leon Chua, mais aucun exemple physique n’a vu le jour avant 2008 par une équipe de chercheurs des laboratoires HP. Les memristors peuvent être vues comme des neurones, d’où l’implémentation d’un simulateur pour étudier le comportement de ces nouveaux composants.
 
 \subsection{État actuel}
+
+\paragraph{}
 Notre PJI est la suite directe d’un PJI de l’année dernière, ainsi que d’un projet M2. Nous avons donc put rencontrer les étudiants qui ont démarrés le projet, et ainsi avoir une présentation de leurs travaux.
 
+\paragraph{}
 Il s’agit de l’implémentation d’un simulateur de neurone à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, mais qui pose certain problème car ils (notamment BRIAN, développait en python) ont le problème de ce passage a l’échelle, et donc une limitation dans les performances de simulation. Le projet est baptisé N2S3 (Nessie) : Neural Network Scalable Spiking Simulator
 
+\paragraph{}
 Lorsque que nous avons repris le projet, ce dernier avait déjà certaines fonctionnalités partiellement ou complètement opérationnelles.
 
+\paragraph{}
 Le projet à été pensée de façon générique : il doit pouvoir s’adapter a différent modèle de réseau. Pour le moment seul le modèle QBG est implémenté (expliquer qbg => tu sais ce que c’est toah? ?). C’est pourquoi le projet est répartie dans différents packages de la façon suivante : un package core contient les classes génériques pour représenter un réseau. un package feature.io pour toutes les fonctionnalités d’entrées/sorties, un package feature.logging pour la gestion des logs et enfin un package models.qbg pour implémenter un réseau de ce type.
 
+\paragraph{}
 L’implémentation du réseau à été pensée de la manière suivante : chaque neurone et chaque synapse est représenté par un acteur. A l’époque, un synchronizer, qui est également  un agent, était en charge de récupérer tous les messages, et de les redistribuer à travers le réseau pour que la cohérence dans le temps soit bien respectée. 
 
+\paragraph{}
 Pour commencer la simulation, il suffisait de lancer des messages dans le réseau.
-
 
 \subsection{Perspectives du travail réalisés}
 
@@ -115,13 +121,17 @@ Nous avons donc travaillé sur ces points, afin de permettre à N2S3 d’évolue
 
 \section{Ajout des Entrées}
 
-    Notre première tâche dans ce projet fût de mettre en place un système d'entrées afin de pouvoir stimuler le réseau. Celle-ci fût une bonne introduction pour nous, car elle nous a permis de prendre en main et d’aborder pas à pas le projet
+\paragraph{}
+Notre première tâche dans ce projet fût de mettre en place un système d'entrées afin de pouvoir stimuler le réseau. Celle-ci fût une bonne introduction pour nous, car elle nous a permis de prendre en main et d’aborder pas à pas le projet
 
-    Les fichiers JAER contiennent les données produit, par exemple, par une caméra à impulsion. Ce fichier se présente sous la forme d’une liste d'évènements. Chaque évènement étant représenté par un timestamp et une source. Ainsi, notre tuteur avait déjà implémenté une classe qui lit ces fichiers à partir d’une librairie ajoutée à N2S3. 
+\paragraph{}
+Les fichiers JAER contiennent les données produit, par exemple, par une caméra à impulsion. Ce fichier se présente sous la forme d’une liste d'évènements. Chaque évènement étant représenté par un timestamp et une source. Ainsi, notre tuteur avait déjà implémenté une classe qui lit ces fichiers à partir d’une librairie ajoutée à N2S3. 
 
-    Pour gérer ces évènements d’entrées, nous avons créer une classe abstraite(cf InputGenerator.scala) dont l’implémentation dépendra du format de fichier d’entrée. Étant donnée que nous avions a notre disposition des fichiers JAER, et une classe de lecture, nous avons directement ajouter une classe pour ces formats de fichiers.
+\paragraph{}
+Pour gérer ces évènements d’entrées, nous avons créer une classe abstraite(cf InputGenerator.scala) dont l’implémentation dépendra du format de fichier d’entrée. Étant donnée que nous avions a notre disposition des fichiers JAER, et une classe de lecture, nous avons directement ajouter une classe pour ces formats de fichiers.
 
-    Cette classe se chargera de lire, et de placer d’en une file les évènements. Dans les premières versions, la gestion des entrées était totalement “indépendante” du réseau. Tant qu’il y avait des entrées, on les envoyés au synchronizer. Mais cette méthode le surchargeait, et donc ralentissait l’évolution du réseau. A présent, le synchronizer demande des entrées lorsqu’il juge qu’il en a besoin(un seuil, ou sa file est quasiment vide). Ce qui dynamise la simulation.
+\paragraph{}
+Cette classe se chargera de lire, et de placer d’en une file les évènements. Dans les premières versions, la gestion des entrées était totalement “indépendante” du réseau. Tant qu’il y avait des entrées, on les envoyés au synchronizer. Mais cette méthode le surchargeait, et donc ralentissait l’évolution du réseau. A présent, le synchronizer demande des entrées lorsqu’il juge qu’il en a besoin(un seuil, ou sa file est quasiment vide). Ce qui dynamise la simulation.
 
 
 \section{Création de réseau à partir de fichier XML}
