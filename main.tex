@@ -1,7 +1,7 @@
 % Package
 
 \documentclass{article}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
@@ -16,6 +16,107 @@
 % Flyleaf
 
 \maketitle
+
+\newpage
+
+% Table of contents
+
+\tableofcontents
+
+\newpage
+
+% Introduction
+
+\section*{Introduction}
+
+Sujet : 
+    Il s’agit du sujet 65 : Environnement de simulation d'un accélérateur neuromorphique. Nous devions élaborer un langage dédié pour décrire un réseau de neurones ainsi qu’une simulation.
+
+Mais le projet a eu d’autres besoins plus urgent, et nous avons donc développés les points importants que le simulateur avait besoin.
+
+Motivations : 
+    Dans notre volonté de faire un doctorat, nous pensons que ce sujet était approprié pour nous apprendre des aspects de la recherche. De plus, l’utilisation de scala, et donc de son apprentissage était également un apport majeur à notre culture informatique. 
+		
+% Project presentation
+
+\section{Présentation du projet}
+
+\subsection{Technologies}
+        Scala: Scala est un langage de programmation multi-paradigme crée par l’Ecole polytechnique fédéral de Lausanne (EPFL). Il combine la programmation orientés objet et le fonctionnel. Le langage Scala permet également de passer à l’échelle, et le fait qu’il utilise la machine virtuelle java (JVM) permet une portabilité sur différentes plateformes et ainsi l’utilisation de cluster pour fonctionner.
+
+        Akka: Akka est une bibliothèque qui permet d’ajouter de la concurrence et de la distribution à Scala, le tout sous la forme d’agent qui communique par message.
+
+        Memristor: Les memristors sont des composants électroniques dis passifs, il vient de la contraction de “memory” et “resistance”. Ce composant utilise sa résistance qui peut varier grâce à un courant électronique pour stocker de l’information. Le memristor a été “prédit” en 1971 par Leon Chua, mais aucun exemple physique n’a vu le jour avant 2008 par une équipe de chercheurs des laboratoires HP. Les memristors peuvent être vues comme des neurones, d’où l’implémentation d’un simulateur pour étudier le comportement de ces nouveaux composants.
+        
+        JspikeStack: C’est un projet en java, qui construit et simule un réseau neuronal. Il permet notamment d’utiliser le réseau pré-appris Mnist, qui reconnaît les chiffres à partir du caméras.
+
+\subsection{État actuel}
+Notre PJI est la suite directe d’un PJI de l’année dernière, ainsi que d’un projet M2. Nous avons donc put rencontrer les étudiants qui ont démarrés le projet, et ainsi avoir une présentation de leurs travaux.
+
+Il s’agit de l’implémentation d’un simulateur de neurone à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, mais qui pose certain problème car ils (notamment BRIAN, développait en python) ont le problème de ce passage a l’échelle, et donc une limitation dans les performances de simulation. Le projet est baptisé N2S3 (Nessie) : Neural Network Scalable Spiking Simulator
+
+Lorsque que nous avons repris le projet, ce dernier avait déjà certaines fonctionnalités partiellement ou complètement opérationnelles.
+
+Le projet à été pensée de façon générique : il doit pouvoir s’adapter a différent modèle de réseau. Pour le moment seul le modèle QBG est implémenté (expliquer qbg => tu sais ce que c’est toah? ?). C’est pourquoi le projet est répartie dans différents packages de la façon suivante : un package core contient les classes génériques pour représenter un réseau. un package feature.io pour toutes les fonctionnalités d’entrées/sorties, un package feature.logging pour la gestion des logs et enfin un package models.qbg pour implémenter un réseau de ce type.
+
+L’implémentation du réseau à été pensée de la manière suivante : chaque neurone et chaque synapse est représenté par un acteur. A l’époque, un synchronizer, qui est également  un agent, était en charge de récupérer tous les messages, et de les redistribuer à travers le réseau pour que la cohérence dans le temps soit bien respectée. 
+
+Pour commencer la simulation, il suffisait de lancer des messages dans le réseau.
+
+
+\subsection{Perspectives du travail réalisés}
+
+
+Le fonctionnement global du simulateur fonctionne, hélas plusieurs problèmes se posent. 
+
+La fourniture à la main d’entrées dans le simulateur n’est pas une solution convenable, de même que la création d’un réseau neuronale.
+
+Les visualisations actuelles ne sont pas satifaisantes, et les logs ne permettent pas de bien comprendre l’évolution du réseau.
+
+Avec un unique synchronizer pour le simulateur, le passage à l’échelle est impossible, il devient le goulot d’étranglement et ralentis toutes la progression de la simulation.
+
+Nous avons donc travaillé sur ces points, afin de permettre à N2S3 d’évoluer.
+
+
+\section{Ajout des Entrées}
+
+    Notre première tâche dans ce projet fût de mettre en place un système d'entrées afin de pouvoir stimuler le réseau. Celle-ci fût une bonne introduction pour nous, car elle nous a permis de prendre en main et d’aborder pas à pas le projet
+
+    Fichiers JAER
+
+    Les fichiers JAER contiennent les données produit, par exemple, par une caméra à impulsion. Ce fichier se présente sous la forme d’une liste d'évènements. Chaque évènement étant représenté par un timestamp et une source. Ainsi, notre tuteur avait déjà implémenté une classe qui lit ces fichiers à partir d’une librairie ajoutée à N2S3. 
+
+    Pour gérer ces évènements d’entrées, nous avons créer une classe abstraite(cf InputGenerator.scala) dont l’implémentation dépendra du format de fichier d’entrée. Étant donnée que nous avions a notre disposition des fichiers JAER, et une classe de lecture, nous avons directement ajouter une classe pour ces formats de fichiers.
+
+    Cette classe se chargera de lire, et de placer d’en une file les évènements. Dans les premières versions, la gestion des entrées était totalement “indépendante” du réseau. Tant qu’il y avait des entrées, on les envoyés au synchronizer. Mais cette méthode le surchargeait, et donc ralentissait l’évolution du réseau. A présent, le synchronizer demande des entrées lorsqu’il juge qu’il en a besoin(un seuil, ou sa file est quasiment vide). Ce qui dynamise la simulation.
+
+\section{Création de réseau à partir de fichier XML}
+
+Nous avons ensuite développé une classe qui permet de créer un réseau neuronale à partir d’un fichier XML.
+
+Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans sa thèse. La classe permet d’initialiser le réseau, de connecté les neurones et les synapses ainsi que de leur affectés des potentiels/seuils à l’initialisation.
+
+\section{Génération de graphes}
+
+    Nous avons mis en place une génération de graphe à partir des fichiers de log crée par chacun des acteurs. En effet, pour pouvoir apprécier les simulations et leurs résultats, une visualisation graphique est nécessaires.
+
+    Graphes d’activité des neurones : 
+
+A partir des logs que les neurones créent, nous pouvons générer un graphe d’activité neuronales. 
+
+
+
+Certaines options sont disponibles pour générer ce type de graphes :
+Donner la liste des index des neurones que l’on souhaite observer.
+Donner la liste des index des couches que l’on souhaite observer.
+Donner un temps maximum.
+
+
+    Graphes des activités des synapses : 
+
+
+Remarques : ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
+
 
 
 \end{document}
