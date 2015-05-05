@@ -5,6 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 \usepackage{graphicx}
+\usepackage[export]{adjustbox}
 
 \begin{document}
 
@@ -58,13 +59,30 @@ Mais le projet a eu d’autres besoins plus urgent, et nous avons donc développ
 \section{Présentation du projet}
 
 \subsection{Technologies}
-        \subsubsection{Scala} Scala est un langage de programmation multi-paradigme crée par l’Ecole polytechnique fédéral de Lausanne (EPFL). Il combine la programmation orientés objet et le fonctionnel. Le langage Scala permet également de passer à l’échelle, et le fait qu’il utilise la machine virtuelle java (JVM) permet une portabilité sur différentes plateformes et ainsi l’utilisation de cluster pour fonctionner.
 
-        \subsubsection{Akka} Akka est une bibliothèque qui permet d’ajouter de la concurrence et de la distribution à Scala, le tout sous la forme d’agent qui communique par message.
+\subsubsection{Scala} 
+\begin{figure}[h!]
+\includegraphics[scale=0.15,right]{image/scala.png}
+\end{figure}
+\paragraph
+Scala est un langage de programmation multi-paradigme crée par l’Ecole polytechnique fédéral de Lausanne (EPFL). Il combine la programmation orientés objet et le fonctionnel. Le langage Scala permet également de passer à l’échelle, et le fait qu’il utilise la machine virtuelle java (JVM) permet une portabilité sur différentes plateformes et ainsi l’utilisation de cluster pour fonctionner.
 
-        \subsubsection{Memristor} Les memristors sont des composants électroniques dis passifs, il vient de la contraction de “memory” et “resistance”. Ce composant utilise sa résistance qui peut varier grâce à un courant électronique pour stocker de l’information. Le memristor a été “prédit” en 1971 par Leon Chua, mais aucun exemple physique n’a vu le jour avant 2008 par une équipe de chercheurs des laboratoires HP. Les memristors peuvent être vues comme des neurones, d’où l’implémentation d’un simulateur pour étudier le comportement de ces nouveaux composants.
+\subsubsection{Akka} 
+\begin{figure}[h!]
+\includegraphics[scale=0.1,right]{image/akka.png}
+\end{figure}
+\paragraph
+Akka est une bibliothèque disponible en Java et Scala qui permet d’ajouter de la concurrence et de la distribution à Scala, via un système d'acteur et de message.
         
-        \subsubsection{JspikeStack} C’est un projet en java, qui construit et simule un réseau neuronal. Il permet notamment d’utiliser le réseau pré-appris Mnist, qui reconnaît les chiffres à partir du caméras.
+\subsubsection{JspikeStack} 
+
+\paragraph
+JspikeStack est une application écrit en Java basé sur le modèle d'une machine de Boltzmann restreinte, qui construit et simule un réseau neuronal. Il permet notamment d’utiliser le réseau pré-appris Mnist, qui reconnaît les chiffres à partir du caméras.
+
+\subsubsection{Memristor} 
+
+\paragraph
+Les memristors sont des composants électroniques dis passifs, il vient de la contraction de “memory” et “resistance”. Ce composant utilise sa résistance qui peut varier grâce à un courant électronique pour stocker de l’information. Le memristor a été “prédit” en 1971 par Leon Chua, mais aucun exemple physique n’a vu le jour avant 2008 par une équipe de chercheurs des laboratoires HP. Les memristors peuvent être vues comme des neurones, d’où l’implémentation d’un simulateur pour étudier le comportement de ces nouveaux composants.
 
 \subsection{État actuel}
 Notre PJI est la suite directe d’un PJI de l’année dernière, ainsi que d’un projet M2. Nous avons donc put rencontrer les étudiants qui ont démarrés le projet, et ainsi avoir une présentation de leurs travaux.
