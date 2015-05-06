@@ -90,19 +90,22 @@ Les memristors sont des composants électroniques dis passifs, il vient de la co
 Notre PJI est la suite directe d’un PJI de l’année dernière, ainsi que d’un projet M2. Nous avons donc put rencontrer les étudiants qui ont démarrés le projet, et ainsi avoir une présentation de leurs travaux.
 
 \paragraph{}
-Il s’agit de l’implémentation d’un simulateur de neurone à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, mais qui pose certain problème car ils (notamment BRIAN, développait en python) ont le problème de ce passage a l’échelle, et donc une limitation dans les performances de simulation. Le projet est baptisé N2S3 (Nessie) : Neural Network Scalable Spiking Simulator
+Il s’agit de l’implémentation d’un simulateur de neurone à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, notamment BRIAN qui est développé en python. Mais ces derniers ont quelques problèmes comme par exemple celui du passage a l’échelle, et donc une limitation dans les performances de simulation. Le projet est baptisé N2S3 (Nessie) : Neural Network Scalable Spiking Simulator
 
 \paragraph{}
 Lorsque que nous avons repris le projet, ce dernier avait déjà certaines fonctionnalités partiellement ou complètement opérationnelles.
 
 \paragraph{}
-Le projet à été pensée de façon générique : il doit pouvoir s’adapter a différent modèle de réseau. Pour le moment seul le modèle QBG est implémenté (expliquer qbg => tu sais ce que c’est toah? ?). C’est pourquoi le projet est répartie dans différents packages de la façon suivante : un package core contient les classes génériques pour représenter un réseau. un package feature.io pour toutes les fonctionnalités d’entrées/sorties, un package feature.logging pour la gestion des logs et enfin un package models.qbg pour implémenter un réseau de ce type.
+Le projet à été pensée de façon générique : il doit pouvoir s’adapter a différent modèle de réseau. Pour le moment seul le modèle QBG est implémenté. C’est pourquoi le projet est répartie dans différents packages de la façon suivante : un package core contient les classes génériques pour représenter un réseau. un package feature.io pour toutes les fonctionnalités d’entrées/sorties, un package feature.logging pour la gestion des logs et enfin un package models.qbg pour implémenter le réseau de ce type.
 
 \paragraph{}
-L’implémentation du réseau à été pensée de la manière suivante : chaque neurone et chaque synapse est représenté par un acteur. A l’époque, un synchronizer, qui est également  un agent, était en charge de récupérer tous les messages, et de les redistribuer à travers le réseau pour que la cohérence dans le temps soit bien respectée. 
+L’implémentation du réseau à été pensée de la manière suivante : chaque neurones et chaque synapses sont représenté par un acteur. Un synchronizer, qui est également  un agent, est en charge de récupérer tous les messages, et de les redistribuer à travers le réseau pour éviter tout problème de causalité temporelle.
 
 \paragraph{}
-Pour commencer la simulation, il suffisait de lancer des messages dans le réseau.
+Les neurones sont réparties dans différentes couche. Comme le simulateur pour le moment suit le modèle restreins de machine de Boltzmann, les seul communication entre les neurones se font entre des couche voisine. Il n'y a donc pas non plus d’interconnexion entre des neurones d'une même couche.
+
+\paragraph{}
+Pour commencer la simulation, il suffisait de lancer des messages dans le réseau sur les neurones des premières couche afin de les stimuler.
 
 \subsection{Perspectives du travail réalisés}
 \paragraph{}
