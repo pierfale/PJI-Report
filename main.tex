@@ -5,7 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 \usepackage{graphicx}
-\usepackage{adjustbox}
+\usepackage[export]{adjustbox}
 
 \begin{document}
 
@@ -105,10 +105,18 @@ L’implémentation du réseau à été pensée de la manière suivante : chaque
 Les neurones sont réparties dans différentes couche. Comme le simulateur pour le moment suit le modèle restreins de machine de Boltzmann, les seul communication entre les neurones se font entre des couche voisine. Il n'y a donc pas non plus d’interconnexion entre des neurones d'une même couche.
 
 \paragraph{}
+Avec le modèle actuelle, chaque neurones possède un potentiel qui, lorsqu'il dépasse un seuil fixé, va envoyer un spike à l'ensemble des neurones qui sont relié avec lui. Chaque synapse possède un poids synaptique qui varie au cour de la simulation en fonction des spike qui affecte ou non le neurones dans une certaine fenêtre de temps. Pour reproduire ce comportement, différent type de spike ont été crée : 
+\begin{itemize}
+\item \emph{PreSynapticSpike} qui est le spike envoyé par les neurones vers un synapse
+\item \emph{PostSynapticForwardSpike} qui est le spike envoyé par une synapse vers un neurone. Ce dernier transmet sont propre poids synaptique au neurone.
+\item \emph{PostSynapticBackwardSpike} qui est le spike renvoyé par le neurones vers ses synapse lorsque sont potentiel à dépassé le seuil fixé. Celui ci est nécéssaire pour affecter le poids synaptique en fonction de la réaction du neurone.
+\end{itemize}
+
+\paragraph{}
 Pour commencer la simulation, il suffisait de lancer des messages dans le réseau sur les neurones des premières couche afin de les stimuler.
 
 \subsection{Perspectives du travail réalisés}
-\paragraph{
+\paragraph{}
 Le fonctionnement global du simulateur fonctionne, hélas plusieurs problèmes se posent.
 \begin{itemize}
 \item{La fourniture à la main d’entrées dans le simulateur n’est pas une solution convenable, de même que la création d’un réseau neuronale.}
@@ -116,7 +124,7 @@ Le fonctionnement global du simulateur fonctionne, hélas plusieurs problèmes s
 \item{Avec un unique synchronizer pour le simulateur, le passage à l’échelle est impossible, il devient le goulot d’étranglement et ralentis toutes la progression de la simulation.}
 \end{itemize}
 Nous avons donc travaillé sur ces points, afin de permettre à N2S3 d’évoluer.
-}
+
 \newpage
 
 \section{Ajout des Entrées}
@@ -142,29 +150,29 @@ Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans
 
 \section{Génération de graphes}
 
-\paragraph
+\paragraph{}
 Nous avons mis en place une génération de graphe à partir des fichiers de log crée par chacun des acteurs. En effet, pour pouvoir apprécier les simulations et leurs résultats, une visualisation graphique est nécessaires.
 
 \subsection*{Graphes d’activité des neurones}
-\paragraph
+\paragraph{}
 A partir des logs que les neurones créent, nous pouvons générer un graphe d’activité neuronales. 
 
 \includegraphics[scale=0.95,right]{image/neuronActivity.png}
 
-\paragraph{
+\paragraph{}
 Certaines options sont disponibles pour générer ce type de graphes :
 \begin{itemize}
 \item{Donner la liste des index des neurones que l’on souhaite observer.}
 \item{Donner la liste des index des couches que l’on souhaite observer.}
 \item{Donner un temps maximum.}
 \end{itemize}
-}
+
 \subsection*{Graphes des activités des synapses}
 
 rubarberubarberubarberubarberubarberubarberubarberubarberubarbe
 
 \subsection{Remarques}
-\paragraph{
+\paragraph{}
 ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
-}
+
 \end{document}
