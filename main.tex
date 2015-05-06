@@ -105,7 +105,7 @@ L’implémentation du réseau à été pensée de la manière suivante : chaque
 Pour commencer la simulation, il suffisait de lancer des messages dans le réseau.
 
 \subsection{Perspectives du travail réalisés}
-\paragraph{
+\paragraph{}
 Le fonctionnement global du simulateur fonctionne, hélas plusieurs problèmes se posent.
 \begin{itemize}
 \item{La fourniture à la main d’entrées dans le simulateur n’est pas une solution convenable, de même que la création d’un réseau neuronale.}
@@ -113,7 +113,6 @@ Le fonctionnement global du simulateur fonctionne, hélas plusieurs problèmes s
 \item{Avec un unique synchronizer pour le simulateur, le passage à l’échelle est impossible, il devient le goulot d’étranglement et ralentis toutes la progression de la simulation.}
 \end{itemize}
 Nous avons donc travaillé sur ces points, afin de permettre à N2S3 d’évoluer.
-}
 \newpage
 
 \section{Ajout des Entrées}
@@ -133,8 +132,8 @@ Cette classe se chargera de lire, et de placer d’en une file les évènements.
 
 \section{Création de réseau à partir de fichier XML}
 
+\paragraph{}
 Nous avons ensuite développé une classe qui permet de créer un réseau neuronale à partir d’un fichier XML.
-
 Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans sa thèse. La classe permet d’initialiser le réseau, de connecté les neurones et les synapses ainsi que de leur affectés des potentiels/seuils à l’initialisation.
 
 \section{Génération de graphes}
@@ -143,25 +142,24 @@ Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans
 Nous avons mis en place une génération de graphe à partir des fichiers de log crée par chacun des acteurs. En effet, pour pouvoir apprécier les simulations et leurs résultats, une visualisation graphique est nécessaires.
 
 \subsection*{Graphes d’activité des neurones}
-\paragraph
+\paragraph{}
 A partir des logs que les neurones créent, nous pouvons générer un graphe d’activité neuronales. 
 
 \includegraphics[scale=0.95,right]{image/neuronActivity.png}
 
-\paragraph{
+\paragraph{}
 Certaines options sont disponibles pour générer ce type de graphes :
 \begin{itemize}
 \item{Donner la liste des index des neurones que l’on souhaite observer.}
 \item{Donner la liste des index des couches que l’on souhaite observer.}
 \item{Donner un temps maximum.}
 \end{itemize}
-}
+
 \subsection*{Graphes des activités des synapses}
 
 rubarberubarberubarberubarberubarberubarberubarberubarberubarbe
 
 \subsection{Remarques}
-\paragraph{
+\paragraph{}
 ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
-}
 \end{document}
