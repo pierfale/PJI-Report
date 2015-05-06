@@ -102,7 +102,7 @@ Le projet à été pensée de façon générique : il doit pouvoir s’adapter a
 L’implémentation du réseau à été pensée de la manière suivante : chaque neurones et chaque synapses sont représenté par un acteur. Un synchronizer, qui est également  un agent, est en charge de récupérer tous les messages, et de les redistribuer à travers le réseau pour éviter tout problème de causalité temporelle.
 
 \paragraph{}
-Les neurones sont réparties dans différentes couche. Comme le simulateur pour le moment suit le modèle restreins de machine de Boltzmann, les eul communication entre les neurones se font entre des couche voisine. Il n'y a donc pas non plus d
+Les neurones sont réparties dans différentes couche. Comme le simulateur pour le moment suit le modèle restreins de machine de Boltzmann, les seul communication entre les neurones se font entre des couche voisine. Il n'y a donc pas non plus d’interconnexion entre des neurones d'une même couche.
 
 \paragraph{}
 Pour commencer la simulation, il suffisait de lancer des messages dans le réseau sur les neurones des premières couche afin de les stimuler.
