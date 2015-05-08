@@ -185,6 +185,7 @@ Celle-ci s'effectue généralement en deux passes :
 	\item{1}: La lecture du fichier de log et la création de variables qui permettent de configurer correctement les fichiers qui seront générés.
 	\item{2}: La génération en elle-même, qui crée deux fichiers : un fichier de données contenant toutes les informations que le graphe a besoin pour répondre au besoin de l'utilisateur, et un fichier plot, qui utilise ce fichier de données et les variables définis durant la lecture.
 \end{itemize}
+(Annexe \ref{gen_graph})
 
 \subsection{Graphes d’activité des neurones}
 \paragraph{}
@@ -209,17 +210,16 @@ rubarberubarberubarberubarberubarberubarberubarberubarberubarbe
 ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
 
 \appendix
-\section{Code samples}
-
-\subsection{Gestion des entrées}
-\subsection{Construction de réseau à partir d'xml}
-\subsection{Génération de graphes}
-
+\section{Génération de graphes}
 Examples de code pour la génération de graphes de l'activité neuronales.
+\label{gen_graph}
 Boucles pour construire le fichier de données.
-\lstinputlisting[language=scala,breaklines=true]{src/loopdata.scala}
+\lstinputlisting[style=Scala_style]{src/loopdata.scala}
 Génération du fichier plot
-\lstinputlisting[language=scala,breaklines=true]{src/pltgen.scala}
+\lstinputlisting[style=Scala_style]{src/pltgen.scala}
+\subsection{Example de fichier de graphe (gnuplot)}
+Voici un exemple de fichier plot généré grâce à l'application, il concerne l'activité neuronale du réseau : 
+\lstinputlisting[breaklines=true]{src/neurons.plt}
 
 \section{Example de fichier xml}
 \label{xml_exemple}
@@ -232,12 +232,6 @@ Voici l'exemple du fichier XML utilisé par Peter O'Connor dans sa thèse, sur l
 \label{xml_builder}
 \lstinputlisting[style=Scala_style]{src/XMLBuilder.scala}
 
-
-\section{Example de fichier de graphe (gnuplot)}
-
-Voici un exemple de fichier plot généré grâce à l'application, il concerne l'activité neuronale du réseau : 
-
-\lstinputlisting[breaklines=true]{src/neurons.plt}
 
 
 \end{document}
