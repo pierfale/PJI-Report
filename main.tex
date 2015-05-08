@@ -166,6 +166,11 @@ Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans
 
 \paragraph{}
 Nous avons mis en place une génération de graphe à partir des fichiers de log crée par chacun des acteurs. En effet, pour pouvoir apprécier les simulations et leurs résultats, une visualisation graphique est nécessaires.
+Celle-ci s'effectue généralement en deux passes : 
+\begin{itemize}
+	\item{1}: La lecture du fichier de log et la création de variables qui permettent de configurer correctement les fichiers qui seront générés.
+	\item{2}: La génération en elle-même, qui crée deux fichiers : un fichier de données contenant toutes les informations que le graphe a besoin pour répondre au besoin de l'utilisateur, et un fichier plot, qui utilise ce fichier de données et les variables définis durant la lecture.
+\end{itemize}
 
 \subsection{Graphes d’activité des neurones}
 \paragraph{}
