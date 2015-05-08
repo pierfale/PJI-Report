@@ -16,7 +16,8 @@
 		CtejOw==
 		</thresh>
 		<W dt="base64-single"><!-- poids synaptiques au debut de la simulation -->
-		H/FKOpNHizmphna5eQ/2Ol21HzrXQue4tneROWuMtjiIBjY5+c/tOWk1Hrpf71C6
+		H/FKOpNHizmphna5eQ/2Ol21HzrXQue4
+		tneROWuMtjiIBjY5+c/tOWk1Hrpf71C6
 		</W>
 	</Layer>
 	<Layer>
@@ -26,7 +27,9 @@
 		<dimx>2</dimx>
 		<dimy>1</dimy>
 		<thresh dt="base64-single">CtejOw==</thresh>
-		<W dt="base64-single">ehW9OS4V9zru3KC5Yb2EuhIierlew/25cJ+rufJO+Tk=</W>
+		<W dt="base64-single">
+		ehW9OS4V9zru3KC5Yb2EuhIierlew/25cJ+rufJO+Tk=
+		</W>
 	</Layer>
 	<Layer>
 		<index>2</index>
