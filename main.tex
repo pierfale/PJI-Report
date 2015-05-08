@@ -53,6 +53,7 @@ Mais le projet a eu d’autres besoins plus urgent, et nous avons donc développ
 \subsection*{Motivations}
     Dans notre volonté de faire un doctorat, nous pensons que ce sujet était approprié pour nous apprendre des aspects de la recherche. De plus, l’utilisation de scala, et donc de son apprentissage était également un apport majeur à notre culture informatique. 
 		
+		Nous avons également pu découvrir une part de la bio-informatique ?? mb or not
 % Project presentation
 
 \newpage
@@ -93,7 +94,7 @@ Les memristors sont des composants électroniques dit passifs, il vient de la co
 Notre PJI est la suite directe d’un PJI de l’année dernière, ainsi que d’un projet M2. Nous avons donc put rencontrer les étudiants qui ont démarrés le projet, et ainsi avoir une présentation de leurs travaux.
 
 \paragraph{}
-Il s’agit de l’implémentation d’un simulateur de neurones à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, mais qui  ont certains problèmes, notamment le passage a l’échelle, et donc une limitation dans les performances de simulation\footnote{par exemple BRIAN, développait en python. L'utilisation du python limite le nombre de neuron pouvant être utilisés}. Le projet est baptisé N2S3 (Nessie) : \emph{Neural Network Scalable Spiking Simulator}.
+Il s’agit de l’implémentation d’un simulateur de neurones à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, mais qui  ont certains problèmes, notamment le passage a l’échelle, et donc une limitation dans les performances de simulation\footnote{par exemple BRIAN, développait en python. L'utilisation du python limite le nombre de neurone pouvant être utilisés}. Le projet est baptisé N2S3 (Nessie) : \emph{Neural Network Scalable Spiking Simulator}.
 
 \paragraph{}
 Lorsque que nous avons repris le projet, ce dernier avait déjà certaines fonctionnalités partiellement ou complètement opérationnelles.
@@ -197,19 +198,21 @@ ces générations se font pour l’instant sur de petits exemples de fichiers de
 
 Examples de code pour la génération de graphes de l'activité neuronales.
 Boucles pour construire le fichier de données.
-\lstinputlisting{src/loopdata.scala}
+\lstinputlisting[language=scala,breaklines=true]{src/loopdata.scala}
 Génération du fichier plot
-\lstinputlisting{src/pltgen.scala}
+\lstinputlisting[language=scala,breaklines=true]{src/pltgen.scala}
 
 \section{Example de fichier xml}
 
 Voici l'exemple du fichier XML utilisé par Peter O'Connor dans sa thèse, sur lequel nous avons batis notre constructeur de réseau à partir de fichier XML :
-\lstinputlisting{src/example.xml}
+
+\lstinputlisting[language=XML,breaklines=true]{src/example.xml}
 
 \section{Example de fichier de graphe (gnuplot)}
 
 Voici un exemple de fichier plot généré grâce à l'application, il concerne l'activité neuronale du réseau : 
 
-\lstinputlisting{src/neurons.plt}
+\lstinputlisting[breaklines=true]{src/neurons.plt}
+
 
 \end{document}

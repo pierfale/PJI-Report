@@ -3,10 +3,10 @@
 	<name>Network</name>
 	<type>SpikerStack</type>
 	<notes/>
-	<nLayers>3</nLayers> <!-- Nombre de couche dans le réseau -->
+	<nLayers>3</nLayers> <!-- Nombre de couche dans le reseau -->
 	<dob>27-Aug-2012 01:56:51</dob>
 	<inputDims/>
-	<Layer><!-- définition de chaque couche -->
+	<Layer><!-- definition de chaque couche -->
 		<index>0</index>
 		<nUnits>3</nUnits><!-- nombre de neurone pour la couche -->
 		<targ>2</targ> 
@@ -15,7 +15,7 @@
 		<thresh dt="base64-single"><!-- seuil des neurones de la couche -->
 		CtejOw==
 		</thresh>
-		<W dt="base64-single"><!-- poids synaptiques au début de la simulation -->
+		<W dt="base64-single"><!-- poids synaptiques au debut de la simulation -->
 		H/FKOpNHizmphna5eQ/2Ol21HzrXQue4tneROWuMtjiIBjY5+c/tOWk1Hrpf71C6
 		</W>
 	</Layer>
