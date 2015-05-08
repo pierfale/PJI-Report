@@ -6,6 +6,7 @@
 \usepackage[francais]{babel}
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
+\usepackage{listings}
 
 \begin{document}
 
@@ -73,17 +74,19 @@ Scala est un langage de programmation multi-paradigme crée par l’Ecole polyte
 \includegraphics[scale=0.1,right]{image/akka.png}
 \end{figure}
 \paragraph{}
-Akka est une bibliothèque disponible en Java et Scala qui permet d’ajouter de la concurrence et de la distribution à Scala, via un système d'acteur et de message.
+Akka est une bibliothèque disponible en Java et Scala qui permet d’y ajouter de la concurrence et de la distribution, via un système d'acteur et de message.
         
 \subsubsection{JspikeStack} 
 
 \paragraph{}
-JspikeStack est une application écrit en Java basé sur le modèle d'une machine de Boltzmann restreinte, qui construit et simule un réseau neuronal. Il permet notamment d’utiliser le réseau pré-appris Mnist, qui reconnaît les chiffres à partir du caméras.
+JspikeStack est une application écrite en Java basée sur le modèle d'une machine de Boltzmann restreinte, qui construit et simule un réseau neuronal. Il permet notamment d’utiliser le réseau pré-appris Mnist, qui reconnaît les chiffres à partir de caméras.
 
 \subsubsection{Memristor} 
 
 \paragraph{}
-Les memristors sont des composants électroniques dis passifs, il vient de la contraction de “memory” et “resistance”. Ce composant utilise sa résistance qui peut varier grâce à un courant électronique pour stocker de l’information. Le memristor a été “prédit” en 1971 par Leon Chua, mais aucun exemple physique n’a vu le jour avant 2008 par une équipe de chercheurs des laboratoires HP. Les memristors peuvent être vues comme des neurones, d’où l’implémentation d’un simulateur pour étudier le comportement de ces nouveaux composants.
+Les memristors sont des composants électroniques dit passifs, il vient de la contraction de “memory” et “resistance”. Ce composant utilise sa résistance qui peut varier grâce à un courant électronique pour stocker de l’information. Le memristor a été “prédit” en 1971 par Leon Chua, mais aucun exemple physique n’a vu le jour avant 2008 par une équipe de chercheurs des laboratoires HP. Les memristors peuvent être vues comme des neurones, d’où l’implémentation d’un simulateur pour étudier le comportement de ces nouveaux composants.
+
+\newpage
 
 \subsection{État actuel}
 
@@ -91,26 +94,26 @@ Les memristors sont des composants électroniques dis passifs, il vient de la co
 Notre PJI est la suite directe d’un PJI de l’année dernière, ainsi que d’un projet M2. Nous avons donc put rencontrer les étudiants qui ont démarrés le projet, et ainsi avoir une présentation de leurs travaux.
 
 \paragraph{}
-Il s’agit de l’implémentation d’un simulateur de neurone à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, notamment BRIAN qui est développé en python. Mais ces derniers ont quelques problèmes comme par exemple celui du passage a l’échelle, et donc une limitation dans les performances de simulation. Le projet est baptisé N2S3 (Nessie) : Neural Network Scalable Spiking Simulator
+Il s’agit de l’implémentation d’un simulateur de neurones à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, mais qui  ont certains problèmes, notamment le passage a l’échelle, et donc une limitation dans les performances de simulation\footnote{par exemple BRIAN, développait en python. L'utilisation du python limite le nombre de neuron pouvant être utilisés}. Le projet est baptisé N2S3 (Nessie) : \emph{Neural Network Scalable Spiking Simulator}.
 
 \paragraph{}
 Lorsque que nous avons repris le projet, ce dernier avait déjà certaines fonctionnalités partiellement ou complètement opérationnelles.
 
 \paragraph{}
-Le projet à été pensée de façon générique : il doit pouvoir s’adapter a différent modèle de réseau. Pour le moment seul le modèle QBG est implémenté. C’est pourquoi le projet est répartie dans différents packages de la façon suivante : un package core contient les classes génériques pour représenter un réseau. un package feature.io pour toutes les fonctionnalités d’entrées/sorties, un package feature.logging pour la gestion des logs et enfin un package models.qbg pour implémenter le réseau de ce type.
+Le projet à été pensée de façon générique : il doit pouvoir s’adapter a différent modèle de réseau. Pour le moment seul le modèle QBG est implémenté (expliquer qbg => tu sais ce que c’est toah? ?). C’est pourquoi le projet est répartie dans différents packages de la façon suivante : un package core contient les classes génériques pour représenter un réseau. un package feature.io pour toutes les fonctionnalités d’entrées/sorties, un package feature.logging pour la gestion des logs et enfin un package models.qbg pour implémenter un réseau de ce type.
 
 \paragraph{}
-L’implémentation du réseau à été pensée de la manière suivante : chaque neurones et chaque synapses sont représenté par un acteur. Un synchronizer, qui est également  un agent, est en charge de récupérer tous les messages, et de les redistribuer à travers le réseau pour éviter tout problème de causalité temporelle.
+L’implémentation du réseau à été pensée de la manière suivante : chaque neurone et chaque synapse est représenté par un acteur. A l’époque, un synchronizer, qui est également  un agent, était en charge de récupérer tous les messages, et de les redistribuer à travers le réseau pour que la cohérence dans le temps soit bien respectée. 
 
 \paragraph{}
-Les neurones sont réparties dans différentes couche. Comme le simulateur pour le moment suit le modèle restreins de machine de Boltzmann, les seul communication entre les neurones se font entre des couche voisine. Il n'y a donc pas non plus d’interconnexion entre des neurones d'une même couche.
+Les neurones sont réparties dans différentes couches. Comme le simulateur pour le moment suit le modèle restreint de machine de Boltzmann, les seules communications entre les neurones se font entre des couches voisines. Il n'y a donc pas non plus d’interconnexion entre des neurones d'une même couche.
 
 \paragraph{}
-Avec le modèle actuelle, chaque neurones possède un potentiel qui, lorsqu'il dépasse un seuil fixé, va envoyer un spike à l'ensemble des neurones qui sont relié avec lui. Chaque synapse possède un poids synaptique qui varie au cour de la simulation en fonction des spike qui affecte ou non le neurones dans une certaine fenêtre de temps. Pour reproduire ce comportement, différent type de spike ont été crée : 
+Avec le modèle actuel, chaque neurone possède un potentiel qui, lorsqu'il dépasse un seuil fixé, va envoyer un spike à l'ensemble des neurones qui sont reliés avec lui. Chaque synapse possède un poids synaptique qui varie au cours de la simulation en fonction des spike qui affectent ou non le neurones dans une certaine fenêtre de temps. Pour reproduire ce comportement, différents types de spike ont été crée : 
 \begin{itemize}
-\item \emph{PreSynapticSpike} qui est le spike envoyé par les neurones vers un synapse
-\item \emph{PostSynapticForwardSpike} qui est le spike envoyé par une synapse vers un neurone. Ce dernier transmet sont propre poids synaptique au neurone.
-\item \emph{PostSynapticBackwardSpike} qui est le spike renvoyé par le neurones vers ses synapse lorsque sont potentiel à dépassé le seuil fixé. Celui ci est nécéssaire pour affecter le poids synaptique en fonction de la réaction du neurone.
+\item \emph{PreSynapticSpike} qui est le spike envoyé par les neurones vers une synapse
+\item \emph{PostSynapticForwardSpike} qui est le spike envoyé par une synapse vers un neurone. Cette dernière transmet son propre poids synaptique au neurone.
+\item \emph{PostSynapticBackwardSpike} qui est le spike renvoyé par le neurone vers ses synapses lorsque son potentiel a dépassé le seuil fixé. Celui-ci est nécéssaire pour affecter le poids synaptique en fonction de la réaction du neurone.
 \end{itemize}
 
 \paragraph{}
@@ -118,12 +121,14 @@ Pour commencer la simulation, il suffisait de lancer des messages dans le résea
 
 \subsection{Perspectives du travail réalisés}
 \paragraph{}
-Le fonctionnement global du simulateur fonctionne, hélas plusieurs problèmes se posent.
+Le simulateur fonctionne globalement, mais certains aspects été a revoir :
 \begin{itemize}
 \item{La fourniture à la main d’entrées dans le simulateur n’est pas une solution convenable, de même que la création d’un réseau neuronale.}
 \item{Les visualisations actuelles ne sont pas satifaisantes, et les logs ne permettent pas de bien comprendre l’évolution du réseau.}
 \item{Avec un unique synchronizer pour le simulateur, le passage à l’échelle est impossible, il devient le goulot d’étranglement et ralentis toutes la progression de la simulation.}
 \end{itemize}
+
+\paragraph{}
 Nous avons donc travaillé sur ces points, afin de permettre à N2S3 d’évoluer.
 
 \newpage
@@ -131,10 +136,10 @@ Nous avons donc travaillé sur ces points, afin de permettre à N2S3 d’évolue
 \section{Ajout des Entrées}
 
 \paragraph{}
-Notre première tâche dans ce projet fût de mettre en place un système d'entrées afin de pouvoir stimuler le réseau. Celle-ci fût une bonne introduction pour nous, car elle nous a permis de prendre en main et d’aborder pas à pas le projet
+Notre première tâche dans ce projet fût de mettre en place un système d'entrées afin de pouvoir stimuler le réseau. Celle-ci fût une bonne introduction pour nous, car elle nous a permit de prendre en main et d’aborder pas à pas le projet
 
 \paragraph{}
-Les fichiers JAER contiennent les données produit, par exemple, par une caméra à impulsion. Ce fichier se présente sous la forme d’une liste d'évènements. Chaque évènement étant représenté par un timestamp et une source. Ainsi, notre tuteur avait déjà implémenté une classe qui lit ces fichiers à partir d’une librairie ajoutée à N2S3. 
+Les fichiers JAER contiennent les données produites, par exemple, par une caméra à impulsion. Ce fichier se présente sous la forme d’une liste d'évènements. Chaque évènement étant représenté par un timestamp et une source. Ainsi, notre tuteur avait déjà implémenté une classe qui lit ces fichiers à partir d’une librairie ajoutée à N2S3. 
 
 \paragraph{}
 Pour gérer ces évènements d’entrées, nous avons créer une classe abstraite(cf InputGenerator.scala) dont l’implémentation dépendra du format de fichier d’entrée. Étant donnée que nous avions a notre disposition des fichiers JAER, et une classe de lecture, nous avons directement ajouter une classe pour ces formats de fichiers.
@@ -142,19 +147,27 @@ Pour gérer ces évènements d’entrées, nous avons créer une classe abstrait
 \paragraph{}
 Cette classe se chargera de lire, et de placer d’en une file les évènements. Dans les premières versions, la gestion des entrées était totalement “indépendante” du réseau. Tant qu’il y avait des entrées, on les envoyés au synchronizer. Mais cette méthode le surchargeait, et donc ralentissait l’évolution du réseau. A présent, le synchronizer demande des entrées lorsqu’il juge qu’il en a besoin(un seuil, ou sa file est quasiment vide). Ce qui dynamise la simulation.
 
+\newpage
 
 \section{Création de réseau à partir de fichier XML}
 
+\paragraph{}
 Nous avons ensuite développé une classe qui permet de créer un réseau neuronale à partir d’un fichier XML.
-
 Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans sa thèse. La classe permet d’initialiser le réseau, de connecté les neurones et les synapses ainsi que de leur affectés des potentiels/seuils à l’initialisation.
+
+\section{Amélioration du synchronizer}
+
+\subsection{Génération d'entrée à la demande}
+\subsection{}
+
+\newpage
 
 \section{Génération de graphes}
 
 \paragraph{}
 Nous avons mis en place une génération de graphe à partir des fichiers de log crée par chacun des acteurs. En effet, pour pouvoir apprécier les simulations et leurs résultats, une visualisation graphique est nécessaires.
 
-\subsection*{Graphes d’activité des neurones}
+\subsection{Graphes d’activité des neurones}
 \paragraph{}
 A partir des logs que les neurones créent, nous pouvons générer un graphe d’activité neuronales. 
 
@@ -168,12 +181,23 @@ Certaines options sont disponibles pour générer ce type de graphes :
 \item{Donner un temps maximum.}
 \end{itemize}
 
-\subsection*{Graphes des activités des synapses}
+\subsection{Graphes des activités des synapses}
 
 rubarberubarberubarberubarberubarberubarberubarberubarberubarbe
 
-\subsection{Remarques}
+\subsection*{Remarques}
 \paragraph{}
 ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
+
+\appendix
+\section{Code samples}
+
+blablablalablalbalb
+
+\section{Example de fichier xml}
+
+Voici l'exemple du fichier XML utilisé par Peter O'Connor dans sa thèse, sur lequel nous avons batis notre constructeur de réseau à partir de fichier XML :
+ 
+ \lstinputlisting{src/example.xml}
 
 \end{document}
