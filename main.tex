@@ -8,6 +8,12 @@
 \usepackage[export]{adjustbox}
 \usepackage{listings}
 
+% Include
+
+\input{scala.tex}
+
+% Document
+
 \begin{document}
 
 % Flyleaf
@@ -113,7 +119,7 @@ Avec le modèle actuel, chaque neurone possède un potentiel qui, lorsqu'il dép
 \begin{itemize}
 \item \emph{PreSynapticSpike} qui est le spike envoyé par les neurones vers une synapse
 \item \emph{PostSynapticForwardSpike} qui est le spike envoyé par une synapse vers un neurone. Cette dernière transmet son propre poids synaptique au neurone.
-\item \emph{PostSynapticBackwardSpike} qui est le spike renvoyé par le neurone vers ses synapses lorsque son potentiel a dépassé le seuil fixé. Celui-ci est nécéssaire pour affecter le poids synaptique en fonction de la réaction du neurone.
+\item \emph{PostSynapticBackwardSpike} qui est le spike renvoyé par le neurone vers ses synapses lorsque son potentiel a dépassé le seuil fixé. Celui-ci est nécessaire pour affecter le poids synaptique en fonction de la réaction du neurone.
 \end{itemize}
 
 \paragraph{}
@@ -153,7 +159,13 @@ Cette classe se chargera de lire, et de placer d’en une file les évènements.
 
 \paragraph{}
 Nous avons ensuite développé une classe qui permet de créer un réseau neuronale à partir d’un fichier XML.
-Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans sa thèse. La classe permet d’initialiser le réseau, de connecté les neurones et les synapses ainsi que de leur affectés des potentiels/seuils à l’initialisation.
+Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans sa thèse (Annexe \ref{xml_exemple}). La classe permet d’initialiser le réseau, de connecté les neurones et les synapses ainsi que de leur affectés des potentiels/seuils à l’initialisation.
+
+\paragraph{}
+Ce fichier est construit de la manière suivante. L'ensemble du réseau est décrit à l'intérieur de la balise \emph{Network}. On retrouve notamment le nom du réseau, son type, le nombre de couche ainsi que des paramètres optionnels (température, fréquence de mise à jour, etc ...). Puis pour chaque couche, il y a une balise \emph{Layer} contenant la description de cette dernière. Chaque couche est identifié par un index, via la balise \emph{index}. Elle possède également une couche cible, \emph{targ}, qui est la couche de sortie avec laquelle ses neurones sont connecté. De plus, \emph{nUnits} donne le nombre de neurone contenue dans la couche courante et \emph{dimx} \emph{dimy} leurs répartition sur un plan à deux dimensions. Enfin, chaque seuil des neurones de la couche est représenté par un flottant simple précision encodé sous forme de base 64 dans la balise \emph{thresh} et de la même manière chaque poids synaptique est encodé dans la balise \emph{W}. Comme on travaille avec des modèle de machine de Boltzmann, les neurones entre deux couche voisine sont relié de façon complet : Chaque neurone possède une connexion vers l'ensemble des neurones de la couche voisine.
+
+\paragraph{}
+Pour réalisé cette fonctionnalité, nous avons utilisé la bibliothèque XML directement intégré à Scala. Nous récupérons dans un premier temps le nombre de couche et le nombre de neurones pour chaque couche ainsi que la topologie de ces dernières. A partir de ces informations, nous construisons et initialisons le réseau. Nous avons ensuite crée des message afin de pouvoir modifier les paramètres des neurones et des synapses (leurs seuil et leurs poids synaptiques). Enfin nous avons décodé ces paramètres pour chaque neurones et chaque synapses. (Annexe \ref{xml_builder})
 
 \section{Amélioration du synchronizer}
 
@@ -195,9 +207,14 @@ ces générations se font pour l’instant sur de petits exemples de fichiers de
 blablablalablalbalb
 
 \section{Example de fichier xml}
+\label{xml_exemple}
 
 Voici l'exemple du fichier XML utilisé par Peter O'Connor dans sa thèse, sur lequel nous avons batis notre constructeur de réseau à partir de fichier XML :
  
- \lstinputlisting[language=XML,breaklines=true]{src/example.xml}
+\lstinputlisting[language=XML,breaklines=true]{src/example.xml}
+
+\section{Code du générateur de réseau via fichier XML}
+\label{xml_builder}
+\lstinputlisting[style=Scala,breaklines=true]{src/XMLBuilder.scala}
 
 \end{document}
