@@ -6,6 +6,7 @@
 \usepackage[francais]{babel}
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
+\usepackage{listings}
 
 \begin{document}
 
@@ -145,18 +146,27 @@ Pour gérer ces évènements d’entrées, nous avons créer une classe abstrait
 \paragraph{}
 Cette classe se chargera de lire, et de placer d’en une file les évènements. Dans les premières versions, la gestion des entrées était totalement “indépendante” du réseau. Tant qu’il y avait des entrées, on les envoyés au synchronizer. Mais cette méthode le surchargeait, et donc ralentissait l’évolution du réseau. A présent, le synchronizer demande des entrées lorsqu’il juge qu’il en a besoin(un seuil, ou sa file est quasiment vide). Ce qui dynamise la simulation.
 
+\newpage
+
 \section{Création de réseau à partir de fichier XML}
 
 \paragraph{}
 Nous avons ensuite développé une classe qui permet de créer un réseau neuronale à partir d’un fichier XML.
 Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans sa thèse. La classe permet d’initialiser le réseau, de connecté les neurones et les synapses ainsi que de leur affectés des potentiels/seuils à l’initialisation.
 
+\section{Amélioration du synchronizer}
+
+\subsection{Génération d'entrée à la demande}
+\subsection{}
+
+\newpage
+
 \section{Génération de graphes}
 
 \paragraph{}
 Nous avons mis en place une génération de graphe à partir des fichiers de log crée par chacun des acteurs. En effet, pour pouvoir apprécier les simulations et leurs résultats, une visualisation graphique est nécessaires.
 
-\subsection*{Graphes d’activité des neurones}
+\subsection{Graphes d’activité des neurones}
 \paragraph{}
 A partir des logs que les neurones créent, nous pouvons générer un graphe d’activité neuronales. 
 
@@ -170,12 +180,23 @@ Certaines options sont disponibles pour générer ce type de graphes :
 \item{Donner un temps maximum.}
 \end{itemize}
 
-\subsection*{Graphes des activités des synapses}
+\subsection{Graphes des activités des synapses}
 
 rubarberubarberubarberubarberubarberubarberubarberubarberubarbe
 
-\subsection{Remarques}
+\subsection*{Remarques}
 \paragraph{}
 ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
+
+\appendix
+\section{Code samples}
+
+blablablalablalbalb
+
+\section{Example de fichier xml}
+
+Voici l'exemple du fichier XML utilisé par Peter O'Connor dans sa thèse, sur lequel nous avons batis notre constructeur de réseau à partir de fichier XML :
+ 
+ \lstinputlisting{src/example.xml}
 
 \end{document}
