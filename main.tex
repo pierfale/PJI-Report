@@ -191,12 +191,25 @@ ces générations se font pour l’instant sur de petits exemples de fichiers de
 \appendix
 \section{Code samples}
 
-blablablalablalbalb
+\subsection{Gestion des entrées}
+\subsection{Construction de réseau à partir d'xml}
+\subsection{Génération de graphes}
+
+Examples de code pour la génération de graphes de l'activité neuronales.
+Boucles pour construire le fichier de données.
+\lstinputlisting{src/loopdata.scala}
+Génération du fichier plot
+\lstinputlisting{src/pltgen.scala}
 
 \section{Example de fichier xml}
 
 Voici l'exemple du fichier XML utilisé par Peter O'Connor dans sa thèse, sur lequel nous avons batis notre constructeur de réseau à partir de fichier XML :
- 
- \lstinputlisting{src/example.xml}
+\lstinputlisting{src/example.xml}
+
+\section{Example de fichier de graphe (gnuplot)}
+
+Voici un exemple de fichier plot généré grâce à l'application, il concerne l'activité neuronale du réseau : 
+
+\lstinputlisting{src/neurons.plt}
 
 \end{document}
