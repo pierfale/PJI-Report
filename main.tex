@@ -42,6 +42,14 @@
 
 \newpage
 
+%Remerciements
+
+\section*{Remerciements}
+
+Nous souhaitons remercier Pierre Boulet, Mahyar Shahsavari et Philippe Devienne, qui nous ont accompagnés durant notre PJI.
+
+\newpage
+
 % Table of contents
 
 \tableofcontents
@@ -58,9 +66,7 @@
 Mais le projet a eu d’autres besoins plus urgent, et nous avons donc développés les points importants que le simulateur avait besoin.
 
 \subsection*{Motivations}
-    Dans notre volonté de faire un doctorat, nous pensons que ce sujet était approprié pour nous apprendre des aspects de la recherche. De plus, l’utilisation de scala, et donc de son apprentissage était également un apport majeur à notre culture informatique. 
-		
-		Nous avons également pu découvrir une part de la bio-informatique ?? mb or not
+Dans notre volonté de faire un doctorat, nous pensons que ce sujet était approprié pour nous apprendre des aspects de la recherche. De plus, l’utilisation de scala, et donc de son apprentissage était également un apport majeur à notre culture informatique. Nous avons également pu découvrir une part de la bio-informatique, ainsi qu'une nouvelle technologie de pointe, qui sera omni-présente : le memristor.
 % Project presentation
 
 \newpage
@@ -103,7 +109,8 @@ Les memristors sont des composants électroniques dit passifs, il vient de la co
 Notre PJI est la suite directe d’un PJI de l’année dernière, ainsi que d’un projet M2. Nous avons donc put rencontrer les étudiants qui ont démarrés le projet, et ainsi avoir une présentation de leurs travaux.
 
 \paragraph{}
-Il s’agit de l’implémentation d’un simulateur de neurones à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, mais qui  ont certains problèmes, notamment le passage a l’échelle, et donc une limitation dans les performances de simulation\footnote{par exemple BRIAN, développait en python. L'utilisation du python limite le nombre de neurone pouvant être utilisés}. Le projet est baptisé N2S3 (Nessie) : \emph{Neural Network Scalable Spiking Simulator}.
+Il s’agit de l’implémentation d’un simulateur de neurones à base de “Spike”, les messages que s’échangent les neurones grâce au synapses par lesquelles ils sont reliés. Il y a plusieurs simulateur déjà existant, mais qui  ont certains problèmes, notamment le passage a l’échelle, et donc une limitation dans les performances de simulation\footnote{par exemple BRIAN, développait en python. L'utilisation du python limite le nombre de neurone pouvant être utilisés}. Le projet est baptisé N2S3 (Nessie) : \emph{\textbf{N}eural \textbf{N}etwork \textbf{S}calable
+\textbf{S}pike \textbf{S}imulator}.
 
 \paragraph{}
 Lorsque que nous avons repris le projet, ce dernier avait déjà certaines fonctionnalités partiellement ou complètement opérationnelles.
@@ -165,10 +172,10 @@ Nous avons ensuite développé une classe qui permet de créer un réseau neuron
 Nous avons pris comme base, les fichiers XML utilisés par Peter O’Connor dans sa thèse (Annexe \ref{xml_exemple}). La classe permet d’initialiser le réseau, de connecté les neurones et les synapses ainsi que de leur affectés des potentiels/seuils à l’initialisation.
 
 \paragraph{}
-Ce fichier est construit de la manière suivante. L'ensemble du réseau est décrit à l'intérieur de la balise \emph{Network}. On retrouve notamment le nom du réseau, son type, le nombre de couche ainsi que des paramètres optionnels (température, fréquence de mise à jour, etc ...). Puis pour chaque couche, il y a une balise \emph{Layer} contenant la description de cette dernière. Chaque couche est identifié par un index, via la balise \emph{index}. Elle possède également une couche cible, \emph{targ}, qui est la couche de sortie avec laquelle ses neurones sont connecté. De plus, \emph{nUnits} donne le nombre de neurone contenue dans la couche courante et \emph{dimx} \emph{dimy} leurs répartition sur un plan à deux dimensions. Enfin, chaque seuil des neurones de la couche est représenté par un flottant simple précision encodé sous forme de base 64 dans la balise \emph{thresh} et de la même manière chaque poids synaptique est encodé dans la balise \emph{W}. Comme on travaille avec des modèle de machine de Boltzmann, les neurones entre deux couche voisine sont relié de façon complet : Chaque neurone possède une connexion vers l'ensemble des neurones de la couche voisine.
+Ce fichier est construit de la manière suivante. L'ensemble du réseau est décrit à l'intérieur de la balise \emph{Network}. On retrouve notamment le nom du réseau, son type, le nombre de couche ainsi que des paramètres optionnels (température, fréquence de mise à jour, etc ...). Puis pour chaque couche, il y a une balise \emph{Layer} contenant la description de cette dernière. Chaque couche est identifiée par un index, via la balise \emph{index}. Elle possède également une couche cible, \emph{targ}, qui est la couche de sortie avec laquelle ses neurones sont connectés. De plus, \emph{nUnits} donne le nombre de neurone contenu dans la couche courante et \emph{dimx} \emph{dimy} leurs répartition sur un plan à deux dimensions. Enfin, chaque seuil des neurones de la couche est représenté par un flottant simple précision encodé sous forme de base 64 dans la balise \emph{thresh} et de la même manière chaque poids synaptique est encodé dans la balise \emph{W}. Comme on travaille avec des modèles de machine de Boltzmann, les neurones entre deux couches voisines sont reliées de façon complète : Chaque neurone possède une connexion vers l'ensemble des neurones de la couche voisine.
 
 \paragraph{}
-Pour réalisé cette fonctionnalité, nous avons utilisé la bibliothèque XML directement intégré à Scala. Nous récupérons dans un premier temps le nombre de couche et le nombre de neurones pour chaque couche ainsi que la topologie de ces dernières. A partir de ces informations, nous construisons et initialisons le réseau. Nous avons ensuite crée des message afin de pouvoir modifier les paramètres des neurones et des synapses (leurs seuil et leurs poids synaptiques). Enfin nous avons décodé ces paramètres pour chaque neurones et chaque synapses. (Annexe \ref{xml_builder})
+Pour réalisé cette fonctionnalité, nous avons utilisé la bibliothèque XML directement intégrée à Scala. Nous récupérons dans un premier temps le nombre de couches et le nombre de neurones pour chaque couche ainsi que la topologie de ces dernières. A partir de ces informations, nous construisons et initialisons le réseau. Nous avons ensuite crée des messages afin de pouvoir modifier les paramètres des neurones et des synapses (leurs seuil et leurs poids synaptiques). Enfin nous avons décodé ces paramètres pour chaque neurones et chaque synapses. (Annexe \ref{xml_builder})
 
 \section{Amélioration du synchronizer}
 
@@ -186,6 +193,7 @@ Celle-ci s'effectue généralement en deux passes :
 	\item{1}: La lecture du fichier de log et la création de variables qui permettent de configurer correctement les fichiers qui seront générés.
 	\item{2}: La génération en elle-même, qui crée deux fichiers : un fichier de données contenant toutes les informations que le graphe a besoin pour répondre au besoin de l'utilisateur, et un fichier plot, qui utilise ce fichier de données et les variables définis durant la lecture.
 \end{itemize}
+(Annexe \ref{gen_graph})
 
 \subsection{Graphes d’activité des neurones}
 \paragraph{}
@@ -205,22 +213,38 @@ Certaines options sont disponibles pour générer ce type de graphes :
 
 rubarberubarberubarberubarberubarberubarberubarberubarberubarbe
 
-\subsection*{Remarques}
+\subsubsection*{Remarques}
 \paragraph{}
 ces générations se font pour l’instant sur de petits exemples de fichiers de logs, mais il faut l’améliorer pour pouvoir visualiser sur de véritables simulations, avec des réseaux de l’ordre de millions de neurones.
 
+\newpage
+
+\section*{Conclusion}
+
+\subsection*{Bénéfice de l'expérience}
+\subsubsection*{Scolaire}
+Bien que nous ayons déjàà travaillé ensemble, le PJI nous a permis de renforcer notre travail d'équipe, ainsi que d'apprendre  le Scala, qui est un langage extrêment puissant. Nous avons également put pratiquer un peu de fonctionnel, et de la programmation orientés agent / messages.
+\subsubsection*{Professionel}
+Nous avons pu durant ce projet, faire nos premiers pas dans la recherche, ce qui nous a beaucoup plus et conforté dans l'idée de poursuivre nos études.
+\subsubsection*{Humain}
+Le projet nous a permis de rencontrer des personnes intérressante. Nous avons pu dégager un contrat avec l'équipe pour continuer de travaillé cet été sur N2S3.
+
+\subsection*{L'avenir du projet}
+N2S3 possède un grand potentiel, qui demande encore des efforts de développement, notamment sur la visualisation des simulations ainsi que sur le passage à l'échelle.
+
+\newpage
+
 \appendix
-\section{Code samples}
-
-\subsection{Gestion des entrées}
-\subsection{Construction de réseau à partir d'xml}
-\subsection{Génération de graphes}
-
+\section{Génération de graphes}
 Examples de code pour la génération de graphes de l'activité neuronales.
+\label{gen_graph}
 Boucles pour construire le fichier de données.
-\lstinputlisting[language=scala,breaklines=true]{src/loopdata.scala}
+\lstinputlisting[style=Scala_style]{src/loopdata.scala}
 Génération du fichier plot
-\lstinputlisting[language=scala,breaklines=true]{src/pltgen.scala}
+\lstinputlisting[style=Scala_style]{src/pltgen.scala}
+\subsection{Example de fichier de graphe (gnuplot)}
+Voici un exemple de fichier plot généré grâce à l'application, il concerne l'activité neuronale du réseau : 
+\lstinputlisting[breaklines=true]{src/neurons.plt}
 
 \section{Example de fichier xml}
 \label{xml_exemple}
@@ -233,12 +257,6 @@ Voici l'exemple du fichier XML utilisé par Peter O'Connor dans sa thèse, sur l
 \label{xml_builder}
 \lstinputlisting[style=Scala_style]{src/XMLBuilder.scala}
 
-
-\section{Example de fichier de graphe (gnuplot)}
-
-Voici un exemple de fichier plot généré grâce à l'application, il concerne l'activité neuronale du réseau : 
-
-\lstinputlisting[breaklines=true]{src/neurons.plt}
 
 
 \end{document}
