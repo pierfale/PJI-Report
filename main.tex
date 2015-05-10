@@ -89,7 +89,9 @@ Akka est une bibliothèque disponible en Java et Scala qui permet d’y ajouter 
 JspikeStack est une application écrite en Java basée sur le modèle d'une machine de Boltzmann restreinte, qui construit et simule un réseau neuronal. Il permet notamment d’utiliser le réseau pré-appris Mnist, qui reconnaît les chiffres à partir de caméras.
 
 \subsubsection{Memristor} 
-
+\begin{figure}[h!]
+\includegraphics[scale=0.12,right]{image/memristor.jpg}
+\end{figure}
 \paragraph{}
 Les memristors sont des composants électroniques dit passifs, il vient de la contraction de “memory” et “resistance”. Ce composant utilise sa résistance qui peut varier grâce à un courant électronique pour stocker de l’information. Le memristor a été “prédit” en 1971 par Leon Chua, mais aucun exemple physique n’a vu le jour avant 2008 par une équipe de chercheurs des laboratoires HP. Les memristors peuvent être vues comme des neurones, d’où l’implémentation d’un simulateur pour étudier le comportement de ces nouveaux composants.
 
@@ -146,7 +148,7 @@ Nous avons donc travaillé sur ces points, afin de permettre à N2S3 d’évolue
 Notre première tâche dans ce projet fût de mettre en place un système d'entrées afin de pouvoir stimuler le réseau. Celle-ci fût une bonne introduction pour nous, car elle nous a permit de prendre en main et d’aborder pas à pas le projet
 
 \paragraph{}
-Les fichiers JAER contiennent les données produites, par exemple, par une caméra à impulsion. Ce fichier se présente sous la forme d’une liste d'évènements. Chaque évènement étant représenté par un timestamp et une source. Ainsi, notre tuteur avait déjà implémenté une classe qui lit ces fichiers à partir d’une librairie ajoutée à N2S3. 
+Les fichiers JAER contiennent les données produites, par exemple, par une caméra à impulsion. Ce fichier se présente sous la forme d’une liste d’événements. Chaque événement étant représenté par un temps et une source. Ainsi, notre tuteur avait déjà implémenté une classe qui lit ces fichiers à partir d’une librairie ajoutée à N2S3. 
 
 \paragraph{}
 Pour gérer ces évènements d’entrées, nous avons créer une classe abstraite(cf InputGenerator.scala) dont l’implémentation dépendra du format de fichier d’entrée. Étant donnée que nous avions a notre disposition des fichiers JAER, et une classe de lecture, nous avons directement ajouter une classe pour ces formats de fichiers.
