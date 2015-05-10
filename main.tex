@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
 \usepackage{listings}
+\usepackage[babel=true]{csquotes}
 
 % Include
 
@@ -61,19 +62,27 @@ Nous souhaitons remercier Pierre Boulet, Mahyar Shahsavari et Philippe Devienne,
 \section*{Introduction}
 
 \subsection*{Sujet} 
-    Il s’agit du sujet 65 : \emph{Environnement de simulation d'un accélérateur neuromorphique}. Nous devions élaborer un langage dédié pour décrire un réseau de neurones ainsi qu’une simulation.
 
-Mais le projet a eu d’autres besoins plus urgent, et nous avons donc développés les points importants que le simulateur avait besoin.
+\paragraph{}
+Dans le cadre de notre PJI, nous avons choisie le sujet 65 intitulé \enquote{Environnement de simulation d'un accélérateur neuromorphique}. Ce dernier consiste à travailler sur la conception d'un simulateur en remplissant deux objectifs principaux : Créer un langage dédié à la description d'architectures de réseaux de neurones
+et créer un langage de description d'un ensemble de simulations.
+
+\paragraph{}
+Cependant le projet a eu d’autres besoins plus urgent, et nous avons donc développés d'autres fonctionnalités
 
 \subsection*{Motivations}
-Dans notre volonté de faire un doctorat, nous pensons que ce sujet était approprié pour nous apprendre des aspects de la recherche. De plus, l’utilisation de scala, et donc de son apprentissage était également un apport majeur à notre culture informatique. Nous avons également pu découvrir une part de la bio-informatique, ainsi qu'une nouvelle technologie de pointe, qui sera omni-présente : le memristor.
-% Project presentation
+Dans notre volonté de faire un doctorat, nous pensons que ce sujet était particulièrement approprié pour nous apprendre des aspects de la recherche. De plus, l’utilisation de Scala, et donc de son apprentissage était également un apport majeur à notre culture informatique. Nous avons également pu découvrir une part de la bio-informatique, ainsi qu'une nouvelle technologie de pointe, qui sera omni-présente : le memristor.
 
+
+% Project presentation
 \newpage
 
 \section{Présentation du projet}
 
 \subsection{Technologies}
+
+\paragraph{}
+Nous avons dû être confronté à des technologies nouvelles pour nous tout au long de ce projet. Nous avons donc eu une phase d'apprentissage avant de pouvoir réellement commencer le projet.
 
 \subsubsection{Scala} 
 \begin{figure}[h!]
@@ -116,7 +125,7 @@ Il s’agit de l’implémentation d’un simulateur de neurones à base de “S
 Lorsque que nous avons repris le projet, ce dernier avait déjà certaines fonctionnalités partiellement ou complètement opérationnelles.
 
 \paragraph{}
-Le projet à été pensée de façon générique : il doit pouvoir s’adapter a différent modèle de réseau. Pour le moment seul le modèle QBG est implémenté (expliquer qbg => tu sais ce que c’est toah? ?). C’est pourquoi le projet est répartie dans différents packages de la façon suivante : un package core contient les classes génériques pour représenter un réseau. un package feature.io pour toutes les fonctionnalités d’entrées/sorties, un package feature.logging pour la gestion des logs et enfin un package models.qbg pour implémenter un réseau de ce type.
+Le projet à été pensée de façon générique : il doit pouvoir s’adapter a différent modèle de réseau. Pour le moment seul le modèle QBG est implémenté. C’est pourquoi le projet est répartie dans différents packages de la façon suivante : un package \emph{core} contient les classes génériques pour représenter un réseau. un package \emph{feature.io} pour toutes les fonctionnalités d’entrées/sorties, un package \emph{feature.logging} pour la gestion des logs et enfin un package \emph{models.qbg} pour implémenter un réseau de ce type.
 
 \paragraph{}
 L’implémentation du réseau à été pensée de la manière suivante : chaque neurone et chaque synapse est représenté par un acteur. A l’époque, un synchronizer, qui est également  un agent, était en charge de récupérer tous les messages, et de les redistribuer à travers le réseau pour que la cohérence dans le temps soit bien respectée. 
@@ -137,7 +146,7 @@ Pour commencer la simulation, il suffisait de lancer des messages dans le résea
 
 \subsection{Perspectives du travail réalisés}
 \paragraph{}
-Le simulateur fonctionne globalement, mais certains aspects été a revoir :
+Le simulateur fonctionne globalement, mais certains aspects été à revoir :
 \begin{itemize}
 \item{La fourniture à la main d’entrées dans le simulateur n’est pas une solution convenable, de même que la création d’un réseau neuronale.}
 \item{Les visualisations actuelles ne sont pas satifaisantes, et les logs ne permettent pas de bien comprendre l’évolution du réseau.}
@@ -161,7 +170,7 @@ Les fichiers JAER contiennent les données produites, par exemple, par une camé
 Pour gérer ces évènements d’entrées, nous avons créer une classe abstraite(cf InputGenerator.scala) dont l’implémentation dépendra du format de fichier d’entrée. Étant donnée que nous avions a notre disposition des fichiers JAER, et une classe de lecture, nous avons directement ajouter une classe pour ces formats de fichiers.
 
 \paragraph{}
-Cette classe se chargera de lire, et de placer d’en une file les évènements. Dans les premières versions, la gestion des entrées était totalement “indépendante” du réseau. Tant qu’il y avait des entrées, on les envoyés au synchronizer. Mais cette méthode le surchargeait, et donc ralentissait l’évolution du réseau. A présent, le synchronizer demande des entrées lorsqu’il juge qu’il en a besoin(un seuil, ou sa file est quasiment vide). Ce qui dynamise la simulation.
+Cette classe se chargera de lire, et de placer d’en une file les évènements. Dans les premières versions, la gestion des entrées était totalement “indépendante” du réseau. Tant qu’il y avait des entrées, on les envoyaient au synchronizer. Mais cette méthode le surchargeait, et donc ralentissait l’évolution du réseau. A présent, le synchronizer demande des entrées lorsqu’il juge qu’il en a besoin (lorsque sa file de message passe en dessous d'un certain seuil). Ce qui dynamise la simulation. Nous avons également dû faire attention d'envoyer au même instant tous les évènements produit au même moment afin d'éviter tout conflit de causalité.
 
 \newpage
 
@@ -223,11 +232,11 @@ ces générations se font pour l’instant sur de petits exemples de fichiers de
 
 \subsection*{Bénéfice de l'expérience}
 \subsubsection*{Scolaire}
-Bien que nous ayons déjàà travaillé ensemble, le PJI nous a permis de renforcer notre travail d'équipe, ainsi que d'apprendre  le Scala, qui est un langage extrêment puissant. Nous avons également put pratiquer un peu de fonctionnel, et de la programmation orientés agent / messages.
+Bien que nous ayons déjà travaillé ensemble, le PJI nous a permis de renforcer notre travail d'équipe, ainsi que d'apprendre  le Scala, qui est un langage extrêmement puissant. Nous avons également put pratiquer un peu de fonctionnel mais également le concept d'agent / messages.
 \subsubsection*{Professionel}
 Nous avons pu durant ce projet, faire nos premiers pas dans la recherche, ce qui nous a beaucoup plus et conforté dans l'idée de poursuivre nos études.
 \subsubsection*{Humain}
-Le projet nous a permis de rencontrer des personnes intérressante. Nous avons pu dégager un contrat avec l'équipe pour continuer de travaillé cet été sur N2S3.
+Le projet nous a permis de rencontrer des personnes intéressante. Nous avons pu dégager un contrat avec l'équipe pour continuer de travailler cet été sur N2S3.
 
 \subsection*{L'avenir du projet}
 N2S3 possède un grand potentiel, qui demande encore des efforts de développement, notamment sur la visualisation des simulations ainsi que sur le passage à l'échelle.
