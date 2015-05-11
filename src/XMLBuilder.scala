@@ -66,7 +66,7 @@ abstract class XMLBuilder {
       }
       val thresholdTag = threshTagList(0)
       
-      val thresholdValue = ByteBuffer.wrap(decoder.decodeBuffer((scala.xml.Utility.trim(thresholdTag) text))).order(ByteOrder.LITTLE_ENDIAN).getFloat
+      val thresholdValue = ByteBuffer.wrap(decoder.decodeBuffer( (scala.xml.Utility.trim(thresholdTag) text)) ).order(ByteOrder.LITTLE_ENDIAN).getFloat
       List.range(0, neuronsByLayers(layerIndex)).foreach(currentNeuron => setNeuronThreshold(network, layerIndex , currentNeuron, thresholdValue))
     
       // Synapses weight
@@ -81,7 +81,7 @@ abstract class XMLBuilder {
         val inputNeuronsNumber = neuronsByLayers(layerIndex)
         val outputNeuronsNumber = neuronsByLayers(targetIndex)
         
-        val weightBuffer = ByteBuffer.wrap(decoder.decodeBuffer((scala.xml.Utility.trim(weightTag) text))).order(ByteOrder.LITTLE_ENDIAN)
+        val weightBuffer = ByteBuffer.wrap( decoder.decodeBuffer((scala.xml.Utility.trim(weightTag) text)) ).order(ByteOrder.LITTLE_ENDIAN)
         var currentInputIndex = 0;
         var currentOutputIndex = 0;
 
@@ -91,7 +91,7 @@ abstract class XMLBuilder {
         while (weightBuffer.remaining() > 0) {
           
           if(currentInputIndex >= inputNeuronsNumber)
-            throw new RuntimeException("Too much synaptic weight provided ("+(currentInputIndex*outputNeuronsNumber+currentOutputIndex)+")")
+            throw new RuntimeException( "Too much synaptic weight provided ("+(currentInputIndex * outputNeuronsNumber + currentOutputIndex)+")" )
           
           conn = conn :+ ((layerIndex, currentInputIndex, targetIndex, currentOutputIndex))
           weights = weights :+ weightBuffer.getFloat
