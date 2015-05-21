@@ -287,16 +287,12 @@ N2S3 possède un grand potentiel, qui demande encore des efforts de développeme
 \newpage
 
 \appendix
-\section{Génération de graphes}
-Exemples de code pour la génération de graphes de l'activité neuronale.
-\label{gen_graph}
-Boucles pour construire le fichier de données.
-\lstinputlisting[style=Scala_style]{src/loopdata.scala}
-Génération du fichier plot
-\lstinputlisting[style=Scala_style]{src/pltgen.scala}
-\subsection{Exemple de fichier de graphe (gnuplot)}
-Voici un exemple de fichier plot généré grâce à l'application, il concerne l'activité neuronale du réseau : 
-\lstinputlisting[breaklines=true]{src/neurons.plt}
+\section{Graphe de séquence de fonctionnement du réseau}
+Ce graphe permet de visualiser le fonctionnement global du réseau.
+\begin{figure}[h!]
+\includegraphics[scale=0.70,center]{image/fcNetwork.png}
+\caption{(1) : Lorsque l'on reçoit un spike, et que l'on se trouve dans la fenetre de temps, on diminue(ou augmente) le poids synaptique en cas d'une PreSynapticSpike (ou PostSynapticBackwardSpike)}
+\end{figure}
 
 \section{Classe abstraite de gestion des entrées}
 \label{input_generator}
